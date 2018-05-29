@@ -1,6 +1,5 @@
 import React, { Component} from 'react';
 import './styles.css';
-import data from '../cities';
 
 class Search extends Component {
   constructor() {

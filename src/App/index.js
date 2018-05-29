@@ -34,11 +34,19 @@ class App extends Component {
       .then(data => this.setState({
           current: currentCleaner(data), 
           hourly: hourlyCleaner(data), 
-          tenDay: tendDayCleaner(data)}))
+          tenDay: tendDayCleaner(data)}),
+          localStorage.setItem('location', userInput))
       .catch(err => {
         this.setState({error: true})
         alert('Sorry, we could not find that location, please enter your search in the correct format')
       })
+  }
+
+  componentDidMount = () => {
+    let location = localStorage.getItem('location')
+    if (location) {
+      this.getWeather(location)
+    }
   }
 
   render() {
