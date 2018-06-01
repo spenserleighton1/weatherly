@@ -8,4 +8,4 @@ We get the data from www.weatherunderground.com and parse it into smaller object
 
 Below is a gif, showing the visuals of our finished project.
 
-[gif](https://giphy.com/embed/5WkBw9ofmNlEobb8Xp)
+[gif](<iframe src="https://giphy.com/embed/5WkBw9ofmNlEobb8Xp" width="480" height="292" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/sl-qh-weatherly-5WkBw9ofmNlEobb8Xp">via GIPHY</a></p>)
