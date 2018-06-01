@@ -1,7 +1,0 @@
-.App {
-  color: white;
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  background-image: url('../images/blue-sky.jpg');
-  background-position: cover;
-}

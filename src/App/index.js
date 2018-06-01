@@ -1,58 +1,90 @@
 import React, { Component } from 'react';
-import './App.css';
-import CurrentWeather from '../CurrentWeather/CurrentWeather.js';
-import Hourly from '../Hourly/Hourly.js'
-import TenDayForecast from '../TenDay/TenDayForecast.js';
-import { apiKey } from '../apiKey.js'
-import { currentCleaner, hourlyCleaner, tendDayCleaner } from '../apiCleaner.js'
+import './styles.css';
+import CurrentWeather from '../Current';
+import Hourly from '../Hourly';
+import TenDayForecast from '../TenDay';
+import { apiKey } from '../apiKey';
+import { currentCleaner, hourlyCleaner, tenDayCleaner } from '../apiCleaner';
+import Search from '../Search';
+import Welcome from '../Welcome';
 
 
 class App extends Component {
   constructor() {
-    super()
+    super();
+    
     this.state = {
       current: {},
       hourly: [],
-      tenDay: []
+      tenDay: [],
+      welcome: true,
+    };
+    this.getWeather = this.getWeather.bind(this);
+  }
+
+  componentDidMount() {
+    const location = localStorage.getItem('location');
+    if (location) {
+      this.getWeather(location);
     }
   }
 
-  // prevent default on input/submit of location
-  
-  componentDidMount() {
-    fetch(`http://api.wunderground.com/api/${apiKey}//conditions/geolookup/hourly/forecast10day/q/CO/denver.json`)
+  getWeather(userInput) {
+    this.setState({ welcome: false });
+    const { userCity, userState } = this.splitLocation(userInput);
+    this.storeLocation(userInput);
+
+    fetch(`http://api.wunderground.com/api/${apiKey}//conditions/geolookup/hourly/forecast10day/q/${userState}/${userCity}.json`)
       .then(response => response.json())
-      .then(data => this.setState({
-          current: currentCleaner(data), 
-          hourly: hourlyCleaner(data), 
-          tenDay: tendDayCleaner(data)}))
-      .catch(err => console.log(err))
+      .then(data => this.newState(data))
+      .catch(() => {
+        alert('Sorry, we could not find that location, please enter your search in the correct format');
+      });
+  }
+
+  splitLocation(userInput) {
+    const splitLocation = userInput.split(', ');
+    const userCity = splitLocation[0];
+    const userState = splitLocation[1];
+    return { userCity, userState };
+  }
+
+  storeLocation(userInput) {
+    localStorage.setItem('location', userInput);
+  }
+
+  newState(data) {
+    return this.setState({
+      current: currentCleaner(data),
+      hourly: hourlyCleaner(data),
+      tenDay: tenDayCleaner(data),
+    });
   }
 
   render() {
+    if (this.state.welcome) {
+      return (
+        <Welcome
+          getWeather={this.getWeather} />
+      );
+    }
     return (
       <div className="App">
-        <CurrentWeather 
-            day={this.state.current.day}
-            month={this.state.current.month}
-            weekDay={this.state.current.weekday}
-            daysLow={this.state.current.daysLow}
-            summary={this.state.current.summary}
-            humidity={this.state.current.humidity}
-            location={this.state.current.location} 
-            daysHigh={this.state.current.daysHigh}
-            feelsLike={this.state.current.feelsLike}
-            visibility={this.state.current.visibility}
-            currentTemp={this.state.current.currentTemp}
-            />
-        <Hourly 
-            hourlyArray={this.state.hourly}
-            />
-        <TenDayForecast 
-            tenDayArray={this.state.tenDay}
-            />
+        <div className="top">
+          <Search
+            getWeather={this.getWeather} />
+          <CurrentWeather
+            current={this.state.current} />
+        </div>
+        <div className="bottom">
+          <Hourly
+            hourly={this.state.hourly} />
+          <TenDayForecast
+            tenDay={this.state.tenDay} />
+        </div>
       </div>
     );
   }
 }
+
 export default App;
