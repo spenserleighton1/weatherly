@@ -8,4 +8,4 @@ We get the data from www.weatherunderground.com and parse it into smaller object
 
 Below is a gif, showing the visuals of our finished project.
 
-(https://giphy.com/gifs/5WkBw9ofmNlEobb8Xp/html5)
+![gif](https://giphy.com/gifs/5WkBw9ofmNlEobb8Xp/html5)
