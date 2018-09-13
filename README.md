@@ -1,11 +1,10 @@
-#Weatherly
+# Weatherly
 
-Weatherly is a pair project during the second module of Turing School of Software and Design's Front End Development program. 
+### Overview
+Weatherly is an App created to fetch and display the current weather as well as 10 day and hourly forecasts for a given location. Data provided by www.weatherunderground.com .
 
-It has been our first project working with React, and the first project requiring us to make an API call. 
-
-We get the data from www.weatherunderground.com and parse it into smaller objects and arrays, containing only the data we want to render to the page. For the hourly and ten-day forecasts, we iterate over the data, rendering a 'Card' component for each object in their respective arrays.
-
-Below is a gif, showing the visuals of our finished project.
-
+### Screenshots
 ![](https://media.giphy.com/media/EQecKfVenVxaTLsEGW/giphy.gif)
+
+### Learning Goals
+React, and creating your own NPM package.
